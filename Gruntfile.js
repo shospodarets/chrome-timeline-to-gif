@@ -6,6 +6,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         paths: {
             dist: 'dist',
+            html: 'html',
             js: 'js',
             sass: 'styles'
         },
@@ -23,7 +24,7 @@ module.exports = function (grunt) {
             },
             html: {
                 files: [
-                    {expand: true, cwd: './', src: '*.html', dest: '<%= paths.dist %>'}
+                    {expand: true, cwd: '<%= paths.html %>', src: '**/*.*', dest: '<%= paths.dist %>'}
                 ]
             },
             bower: {
@@ -60,7 +61,7 @@ module.exports = function (grunt) {
             },
             html: {
                 files: [
-                    './*.html'
+                    '<%= paths.html %>/**/*.*'
                 ],
                 tasks: ['copy:html']
             }
