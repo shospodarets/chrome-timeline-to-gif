@@ -40,6 +40,15 @@ module.exports = function (grunt) {
         },
 
         watch: {
+            livereload: {
+                options: {
+                    livereload: true,
+                    spawn: true
+                },
+                files: [
+                    '<%= paths.dist %>/**/*.*'
+                ]
+            },
             // TASKS RUNNERS
             common: {
                 files: [
@@ -55,7 +64,7 @@ module.exports = function (grunt) {
             },
             js: {
                 files: [
-                    '<%= paths.js %>/src/**/*.js'
+                    '<%= paths.js %>/common/**/*.js'
                 ],
                 tasks: ['generateJs']
             },
@@ -79,6 +88,15 @@ module.exports = function (grunt) {
             }
         },
 
+        autoprefixer: {
+            options: {
+                browsers: ['last 2 versions']
+            },
+            dist: {
+                src: '<%= paths.dist %>/styles/**/*.css'
+            }
+        },
+
         browserify: {
             options: {
                 banner: '' +
@@ -89,7 +107,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '<%= paths.dist %>/js/common/main.js': ['<%= paths.js %>/common/**/*.js']
+                    '<%= paths.dist %>/js/common/main.js': ['<%= paths.js %>/common/main.js']
                 }
             }
         }
@@ -101,7 +119,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('generateCss', [
-        'sass'
+        'sass',
+        'autoprefixer'
     ]);
 
     grunt.registerTask('default', [
