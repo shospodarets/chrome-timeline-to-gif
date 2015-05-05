@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chrome Timeline to GIF</title>
+    <meta name="description" content="GUI to convert saved Chrome Timeline data to animated GIF (video)">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/all.css">
+</head>
+<body>
+
+<canvas style="display: none;" id="c"></canvas>
+
+
+<script type="text/javascript" src="js/libraries/jsgif/LZWEncoder.js"></script>
+<script type="text/javascript" src="js/libraries/jsgif/NeuQuant.js"></script>
+<script type="text/javascript" src="js/libraries/jsgif/GIFEncoder.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>

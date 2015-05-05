@@ -1,0 +1,24 @@
+{
+  "name": "chrome-timeline-to-gif",
+  "version": "1.0.0",
+  "homepage": "http://blog.gospodarets.com/chrome-timeline-to-gif/dist/",
+  "authors": [
+    {
+      "name": "Sergey Gospodarets",
+      "homepage": "http://blog.gospodarets.com/"
+    }
+  ],
+  "description": "GUI to convert saved Chrome Timeline data to animated GIF (video)",
+  "keywords": [
+    "chrome",
+    "timeline",
+    "gif",
+    "video",
+    "animated"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4"
+  }
+}
