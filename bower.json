@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "~2.1.4",
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "notifyjs": "~0.3.2"
   }
 }

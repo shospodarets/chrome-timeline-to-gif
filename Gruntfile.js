@@ -31,11 +31,6 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: 'bower_components', src: '**/*.*', dest: '<%= paths.dist %>/bower_components'}
                 ]
-            },
-            inc: {// ToDo remove me
-                files: [
-                    {expand: true, cwd: 'inc', src: '**/*.*', dest: '<%= paths.dist %>/inc'}
-                ]
             }
         },
 

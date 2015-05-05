@@ -1,24 +1,28 @@
 'use strict';
 
-var TimelineToGif = require('./components/timeline-to-gif').TimelineToGif;
 var jQuery = require('../../bower_components/jquery/dist/jquery.min');
+// set global vars
+window.jQuery = window.$ = jQuery;
+
+var NotifyCombined = require('../../bower_components/notifyjs/dist/notify-combined');// invoke JS
+var TimelineToGif = require('./components/timeline-to-gif').TimelineToGif;
 var FileLoader = require('./components/file-loader').FileLoader;
 
 var App = function () {
-    // set global vars
-    window.jQuery = window.$ = jQuery;
-
     // APP
     this.$container = $('#container');
-    this.timelineToGif = new TimelineToGif({
-        //    //url: 'inc/TimelineRawData-20150505T105858.json'
-        //    //url: 'inc/TimelineRawData-20150505T132122.json'
-        url: 'inc/TimelineRawData-20150505T132854.json'
-        //    //url: 'inc/chrome.json'
-    });
+    this.timelineToGif = new TimelineToGif();
     this.fileLoader = new FileLoader({
         $container: this.$container
     });
+
+    this.bindEvents();
+};
+
+App.prototype.bindEvents = function () {
+    this.fileLoader.on('json-parsed', function (jsonData) {
+        this.timelineToGif.processJSON(jsonData);
+    }.bind(this));
 };
 
 exports.App = App;

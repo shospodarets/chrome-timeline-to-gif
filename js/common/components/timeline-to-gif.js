@@ -2,11 +2,6 @@
 var TimelineToGif = function (options) {
     this.canvasData = {};
     this.encoder = undefined;
-
-    this.getTimelineData(options.url)
-        .then(this.onJsonSuccess.bind(this), function (err) {
-            console.error('An error occurred when tried to get a JSON', err);
-        });
 };
 
 TimelineToGif.prototype.initCanvasAndEncoder = function (params) {
@@ -59,7 +54,7 @@ TimelineToGif.prototype.getTimelineData = function (url) {
     });
 };
 
-TimelineToGif.prototype.onJsonSuccess = function (data) {
+TimelineToGif.prototype.processJSON = function (data) {
     if (!Array.isArray(data)) {
         console.error('JSON data is expected to be an Array (is it not Chrome Timeline data?)');
         return;
