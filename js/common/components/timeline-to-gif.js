@@ -55,8 +55,14 @@ TimelineToGif.prototype.getTimelineData = function (url) {
 };
 
 TimelineToGif.prototype.processJSON = function (data) {
+    var msg;
     if (!Array.isArray(data)) {
-        console.error('JSON data is expected to be an Array (is it not Chrome Timeline data?)');
+        msg = 'JSON data is expected to be an Array (is it not Chrome Timeline data?)';
+        console.error(msg);
+        $.notify(
+            msg,
+            "error"
+        );
         return;
     }
     var capturedFrames = data.filter(function (el) {
@@ -65,7 +71,12 @@ TimelineToGif.prototype.processJSON = function (data) {
         }
     });
     if (!capturedFrames.length) {
-        console.log('There is no captured frames data in provided file');
+        msg = 'There is no captured frames data in provided file';
+        console.log(msg);
+        $.notify(
+            msg,
+            "warn"
+        );
         return;
     }
 
@@ -100,7 +111,12 @@ TimelineToGif.prototype.initCanvas = function (capturedFrames) {
             this.initCanvasAndEncoder(imgParams);
             this.dataToGif(capturedFrames);
         }.bind(this), function (params) {
-            console.error('An error occurred when tried to load screenshot data ', params.screenshotData, 'as image:', params.err);
+            var msg = 'An error occurred when tried to load screenshot data as image';
+            console.error(msg, params.screenshotData, params.err);
+            $.notify(
+                msg,
+                "error"
+            );
         });
 };
 
@@ -133,7 +149,12 @@ TimelineToGif.prototype.dataToGif = function (capturedFrames) {
         .then(function (loadedImages) {
             this.imagesToGif(capturedFrames, loadedImages);
         }.bind(this), function (err) {
-            console.error('An error occured when tried to load timeline screenshots data to images', err);
+            var msg = 'An error occured when tried to load timeline screenshots data to images';
+            console.error(msg, err);
+            $.notify(
+                msg,
+                "error"
+            );
         });
 };
 
@@ -180,7 +201,6 @@ TimelineToGif.prototype.imagesToGif = function (capturedFrames, loadedImages) {
     img.src = data_url;
     this.downloadCanvasAsImage(data_url);
     // ToDo progress indicator
-    // ToDo Upload, drag-n-drop
 };
 
 TimelineToGif.prototype.downloadCanvasAsImage = function (data_url) {
