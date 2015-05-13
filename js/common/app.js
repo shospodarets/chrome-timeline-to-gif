@@ -10,27 +10,30 @@ require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
 require('../../bower_components/notifyjs/dist/notify-combined');
 
 // COMPONENTS
-var TimelineToGif = require('./components/timeline-to-gif').TimelineToGif;
-var FileLoader = require('./components/file-loader').FileLoader;
 var ProgressIndicator = require('./components/progress-indicator').ProgressIndicator;
+var FileLoader = require('./components/file-loader').FileLoader;
+var TimelineToGif = require('./components/timeline-to-gif').TimelineToGif;
 
 var App = function () {
     // APP
     this.$container = $('#container');
-    this.timelineToGif = new TimelineToGif();
-    this.fileLoader = new FileLoader({
-        $container: this.$container
-    });
     this.progressIndicator = new ProgressIndicator({
         $container: this.$container
+    });
+    this.timelineToGif = new TimelineToGif({
+        progressIndicator: this.progressIndicator
+    });
+    this.fileLoader = new FileLoader({
+        $container: this.$container,
+        progressIndicator: this.progressIndicator
     });
 
     this.bindEvents();
 };
 
 App.prototype.bindEvents = function () {
-    this.fileLoader.on('json-parsed', function (jsonData) {
-        this.timelineToGif.processJSON(jsonData);
+    this.fileLoader.on('json-parsed', function (data) {
+        this.timelineToGif.processJSON(data);
     }.bind(this));
 };
 

@@ -1,5 +1,6 @@
 #progress-indicator-modal {
   .progress-bar {
     min-width: 3em; // http://getbootstrap.com/components/#progress-animated
+    min-height: 20px; // to prevent collapsing when element is empty
   }
 }

@@ -1,6 +1,4 @@
 'use strict';
-var IN_PROGRESS_CLASS = 'in-progress';
-
 var UTILS = require('../utils/utils'),
     EventsSystem = require('../utils/events-system').EventsSystem;
 
@@ -11,6 +9,7 @@ var ProgressIndicator = function (options) {
     // http://www.html5rocks.com/en/tutorials/file/dndfiles/ - progress
 
     this.options = options || {};
+    this.isActive = false;
 
     this.createDom();
     this.bindEvents();
@@ -21,7 +20,7 @@ UTILS.inherit(ProgressIndicator, EventsSystem);
 // DOM
 ProgressIndicator.prototype.createDom = function () {
     this.$container = $('\
-        <div class="modal fade" id="progress-indicator-modal" tabindex="-1" role="dialog" aria-hidden="true">\
+        <div class="modal" id="progress-indicator-modal" tabindex="-1" role="dialog" aria-hidden="true">\
             <div class="modal-dialog">\
                 <div class="modal-content">\
                     <div class="modal-header">\
@@ -53,25 +52,11 @@ ProgressIndicator.prototype.bindEvents = function () {
  * @param [progress] {Number}
  */
 ProgressIndicator.prototype.show = function (title, progress) {
-    if (title) {
-        this.$title.text(title);
-        this.$title.show();
-    } else {
-        this.$title.hide();
-    }
+    this.isActive = true;
+    this.setTitle(title);
 
-    if (progress && progress >= 0 && progress <= 100) {
-        progress = parseInt(progress * 100) / 100;// take maximum two signs after comma
+    this.setProgress(progress);
 
-        this.$progressBar.css('width', progress + '%');
-        this.$progressBar.text(progress + '%');
-    } else {
-        // show just loader
-        this.$progressBar.css('width', '100%');
-        this.$progressBar.text('');
-    }
-
-    document.body.classList.add(IN_PROGRESS_CLASS);
     $(this.$container).modal({
         keyboard: false,
         backdrop: 'static',
@@ -80,8 +65,30 @@ ProgressIndicator.prototype.show = function (title, progress) {
 };
 
 ProgressIndicator.prototype.hide = function () {
-    document.body.classList.remove(IN_PROGRESS_CLASS);
     $(this.$container).modal('hide');
+    this.isActive = false;
+};
+
+ProgressIndicator.prototype.setTitle = function (title) {
+    if (title) {
+        this.$title.text(title);
+        this.$title.show();
+    } else {
+        this.$title.hide();
+    }
+};
+
+ProgressIndicator.prototype.setProgress = function (progress) {
+    if (progress && progress >= 0 && progress <= 100) {
+        progress = parseInt(progress * 100) / 100;// take maximum two signs after comma
+
+        this.$progressBar.css('width', progress + '%');
+        this.$progressBar.text(progress + '%');
+    } else {
+        // show just loader
+        this.$progressBar.css('width', '100%');
+        this.$progressBar.text(' ');
+    }
 };
 
 // EXPORT
