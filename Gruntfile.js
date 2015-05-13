@@ -19,7 +19,12 @@ module.exports = function (grunt) {
         copy: {
             jsLibraries: {
                 files: [
-                    {expand: true, cwd: '<%= paths.js %>/libraries', src: '**/*.*', dest: '<%= paths.dist %>/js/libraries/'},// js libraries
+                    {expand: true, cwd: '<%= paths.js %>/libraries', src: '**/*.*', dest: '<%= paths.dist %>/js/libraries/'}// js libraries
+                ]
+            },
+            webWorkers: {
+                files: [
+                    {expand: true, cwd: '<%= paths.js %>/web-workers', src: '**/*.*', dest: '<%= paths.dist %>/js/web-workers/'}// web-workers
                 ]
             },
             html: {
@@ -53,7 +58,7 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: [
-                    '<%= paths.sass %>/**/*.scss',
+                    '<%= paths.sass %>/**/*.scss'
                 ],
                 tasks: ['generateCss']
             },

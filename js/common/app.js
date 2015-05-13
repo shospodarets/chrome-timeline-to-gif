@@ -12,7 +12,8 @@ require('../../bower_components/notifyjs/dist/notify-combined');
 // COMPONENTS
 var ProgressIndicator = require('./components/progress-indicator').ProgressIndicator;
 var FileLoader = require('./components/file-loader').FileLoader;
-var TimelineToGif = require('./components/timeline-to-gif').TimelineToGif;
+var TimelineToImages = require('./components/timeline-to-images').TimelineToImages;
+var ImagesToGif = require('./components/images-to-gif').ImagesToGif;
 
 var App = function () {
     // APP
@@ -20,11 +21,14 @@ var App = function () {
     this.progressIndicator = new ProgressIndicator({
         $container: this.$container
     });
-    this.timelineToGif = new TimelineToGif({
+    this.timelineToImages = new TimelineToImages({
         progressIndicator: this.progressIndicator
     });
     this.fileLoader = new FileLoader({
         $container: this.$container,
+        progressIndicator: this.progressIndicator
+    });
+    this.imagesToGif = new ImagesToGif({
         progressIndicator: this.progressIndicator
     });
 
@@ -33,7 +37,10 @@ var App = function () {
 
 App.prototype.bindEvents = function () {
     this.fileLoader.on('json-parsed', function (data) {
-        this.timelineToGif.processJSON(data);
+        this.timelineToImages.trigger('processJSON', data);
+    }.bind(this));
+    this.timelineToImages.on('converted-to-images', function (data) {
+        this.imagesToGif.trigger('imagesToGif', data);
     }.bind(this));
 };
 
