@@ -8,7 +8,7 @@
       "homepage": "http://blog.gospodarets.com/"
     }
   ],
-  "description": "GUI to convert saved Chrome Timeline data to animated GIF (video)",
+  "description": "Convert Chrome Timeline data to animated GIF (video)",
   "keywords": [
     "chrome",
     "timeline",

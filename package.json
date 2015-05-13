@@ -2,7 +2,7 @@
   "title": "chrome-timeline-to-gif",
   "name": "chrome-timeline-to-gif",
   "version": "1.0.0",
-  "description": "GUI to convert saved Chrome Timeline data to animated GIF (video)",
+  "description": "Convert Chrome Timeline data to animated GIF (video)",
   "repository": {
     "type": "git",
     "url": "https://github.com/malyw/chrome-timeline-to-gif"
