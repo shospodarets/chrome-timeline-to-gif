@@ -1,0 +1,75 @@
+$mediaBreakPoints: (
+        phonePortraitMax: 479px,
+        phonePortraitMin: 480px,
+  //
+        phoneLandscapeMax:639px,
+        phoneLandscapeMin:640px,
+  //
+        tabletPortraitMax: 767px,
+        tabletPortraitMin: 768px,
+  //
+        tabletLandscapeMax: 1023px,
+        tabletLandscapeMin: 1024px,
+  //
+        desktopSmallMax: 1199px,
+        desktopSmallMin: 1200px
+);
+
+/**
+  Mixin to apply pre-defined breakpoints
+  $smaller {String} media breakpoint name from predefined map
+  $bigger {String} media breakpoint name from predefined map
+
+  USAGE EXAMPLES (with variations):
+
+  @include media($smaller: 'phoneLandscape') {
+  @include media('', 'phoneLandscape') {
+    // styles to be applied for 'phoneLandscape' and smaller
+  }
+
+  @include media($bigger: 'tabletPortrait') {
+  @include media('tabletPortrait', '') {
+    // styles to be applied for 'tabletPortrait' and bigger
+  }
+  @include media('tabletPortrait', 'tabletLandscape') {
+  @include media($bigger: 'tabletPortrait', $smaller: 'tabletLandscape') {
+    // styles to be applied for tablets
+  }
+*/
+@mixin media($bigger: null, $smaller: null) {
+  // check if params are passed and provided in predefined breakpoints map
+  $biggerQuery: null;
+  $smallerQuery: null;
+  @if ($bigger and $bigger != '') {
+    $biggerQuery: map-get($mediaBreakPoints, #{$bigger}Min);
+    @if ($biggerQuery == null) {
+      @error "$bigger:#{$bigger} is not provided in media breakpoints list";
+    }
+  }
+  @if ($smaller and $smaller != '') {
+    $smallerQuery: map-get($mediaBreakPoints, #{$smaller}Max);
+    @if ($smallerQuery == null) {
+      @error "$smaller:#{$smaller} is not provided in media breakpoints list";
+    }
+  }
+
+  @if ($biggerQuery and $smallerQuery) {
+    @if ($biggerQuery > $smallerQuery) {
+      @error "$bigger:#{$bigger} must not be greater than $smaller:#{$smaller}";
+    }
+  }
+
+  @if ($biggerQuery and $smallerQuery) {
+    @media only screen and (min-width: #{$biggerQuery}) and (max-width: #{$smallerQuery}) {
+      @content;
+    }
+  } @else if ($biggerQuery) {
+    @media only screen and (min-width: #{$biggerQuery}) {
+      @content;
+    }
+  } @else if ($smallerQuery) {
+    @media only screen and (max-width: #{$smallerQuery}) {
+      @content;
+    }
+  }
+}

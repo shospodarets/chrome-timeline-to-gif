@@ -21,7 +21,17 @@
     color: transparent;
   }
 
+  .label-wrapper{
+    @include media($smaller: 'phoneLandscape') {
+      display: block;
+    }
+  }
+
   .label {
-    margin-left: 10px;
+    white-space: normal;
+
+    @include media($bigger: 'phoneLandscape') {
+      margin-left: 10px;
+    }
   }
 }
