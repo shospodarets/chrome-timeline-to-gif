@@ -9,10 +9,18 @@ var ImagesToGif = function (options) {
     this.encoder = undefined;
     this.canvasData = undefined;
 
+    this.createDom();
     this.bindEvents();
 };
 
 UTILS.inherit(ImagesToGif, EventsSystem);
+
+ImagesToGif.prototype.createDom = function () {
+    this.$container = $('.result');
+
+    this.$imageWrapper = this.$container.find('.image-wrapper');
+    this.$imageDownloadLink = this.$container.find('.btn-download');
+};
 
 ImagesToGif.prototype.initEncoder = function (loopsNumber) {
     //0  -> loop forever
@@ -27,6 +35,7 @@ ImagesToGif.prototype.initEncoder = function (loopsNumber) {
 ImagesToGif.prototype.encoderDataToImg = function () {
     this.encoder.finish();
     var binary_gif = this.encoder.stream().getData(); //notice this is different from the as3gif package!
+    delete this.encoder;// asking garbage collector to free allocated memory
     return 'data:image/gif;base64,' + btoa(binary_gif);
 };
 
@@ -48,9 +57,7 @@ ImagesToGif.prototype.imagesToGif = function (data) {
     this.processImages(data)
         .then(function () {
             var data_url = this.encoderDataToImg();
-            var img = new Image();
-            document.body.appendChild(img);
-            img.src = data_url;
+            this.showResultImage(data_url);
             this.downloadCanvasAsImage(data_url, fileName);
         }.bind(this), function (err) {
             var msg = 'An error occured when tried to process images from timeline data';
@@ -106,13 +113,19 @@ ImagesToGif.prototype.processImages = function (data) {
         }.bind(this));
 };
 
+// RESULT FUNCTIONS
+ImagesToGif.prototype.showResultImage = function (data_url) {
+    var img = new Image();
+    this.$imageWrapper.empty();
+    this.$imageWrapper.append(img);
+    img.src = data_url;
+    this.$container.show();
+};
+
 ImagesToGif.prototype.downloadCanvasAsImage = function (data_url, fileName) {
-    var link = document.createElement('a');
-    link.href = data_url;
-    link.setAttribute('download', fileName + '.gif');
-    link.innerHTML = 'Click to download the result GIF';
-    document.body.appendChild(link);
-    //link.click();
+    this.$imageDownloadLink.attr('href', data_url);
+    this.$imageDownloadLink.attr('download', fileName + '.gif');
+    //this.$imageDownloadLink.trigger('click);
 };
 
 // EVENTS

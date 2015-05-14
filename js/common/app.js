@@ -17,15 +17,11 @@ var ImagesToGif = require('./components/images-to-gif').ImagesToGif;
 
 var App = function () {
     // APP
-    this.$container = $('#container');
-    this.progressIndicator = new ProgressIndicator({
-        $container: this.$container
-    });
+    this.progressIndicator = new ProgressIndicator();
     this.timelineToImages = new TimelineToImages({
         progressIndicator: this.progressIndicator
     });
     this.fileLoader = new FileLoader({
-        $container: this.$container,
         progressIndicator: this.progressIndicator
     });
     this.imagesToGif = new ImagesToGif({

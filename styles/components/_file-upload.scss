@@ -2,3 +2,26 @@
 .dragover {
   opacity: 0.5;
 }
+
+.file-input-wrapper {
+  .file-input-button {
+    position: relative;
+    overflow: hidden;
+  }
+
+  input[type=file] {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background-color: transparent;
+    color: transparent;
+  }
+
+  .label {
+    margin-left: 10px;
+  }
+}

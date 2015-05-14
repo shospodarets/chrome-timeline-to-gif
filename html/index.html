@@ -15,8 +15,60 @@
 <body>
 
 <canvas style="display: none;" id="c"></canvas>
-<div id="container">
-    <h1>Convert Chrome Timeline data to animated GIF (video)</h1>
+<div class="container">
+    <header class="navbar navbar-default">
+        <h3 class="text-center heading">Convert Chrome Timeline data to animated GIF (video)</h3>
+    </header>
+    <div class="jumbotron">
+        <ol>
+            <li>
+                Open "Timeline" Tab in Dev Tools ( Chrome browser )
+            </li>
+            <li>
+                Click "Record"
+            </li>
+            <li>
+                Do stuff in your page you want to see in result video
+            </li>
+            <li>
+                Stop recording
+            </li>
+            <li>
+                Right click anywhere on timeline data-> "Save Timeline Data..."
+            </li>
+            <li>
+                Upload created file via "Choose File..." button or just drag-n-drop it in the browser window
+            </li>
+        </ol>
+    </div>
+
+    <div class="jumbotron">
+
+        <div class="file-loader">
+            <div class="file-input-wrapper">
+                <button class="btn btn-primary file-input-button">
+                    Choose File...
+                    <input type="file"
+                           size="40"
+                            >
+                </button>
+                <span class="label label-info"></span>
+                <h4>or just drag-n-drop file to the browser window</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron result text-center" style="display: none;">
+        <a class="btn btn-primary btn-download" href="#">
+            Click to download the result GIF
+        </a>
+
+        <div class="image-wrapper"></div>
+    </div>
+
+    <div class="footer">
+        Developed by <a href="http://blog.gospodarets.com/">Sergey Gospodarets</a>
+    </div>
 </div>
 
 <script type="text/javascript" src="js/libraries/jsgif/LZWEncoder.js"></script>

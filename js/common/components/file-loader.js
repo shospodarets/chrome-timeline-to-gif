@@ -15,15 +15,11 @@ UTILS.inherit(FileLoader, EventsSystem);
 
 // DOM
 FileLoader.prototype.createDom = function () {
-    this.$container = $('\
-        <div class="file-loader">\
-                <p>Upload Timeline Data file using button or just drag-n-drop it to the browser window</p>\
-                <input class="file-input" type="file" />\
-        </div>\
-    ');
-    this.$fileInput = this.$container.find('.file-input');
+    this.$container = $('.file-loader');
+    this.$fileInput = this.$container.find('input[type=file]');
+    this.$label = this.$container.find('.label');
 
-    this.options.$container.append(this.$container);
+    this.$container.append(this.$container);
 };
 
 // EVENTS
@@ -36,6 +32,7 @@ FileLoader.prototype.bindEvents = function () {
 FileLoader.prototype.bindFileInput = function () {
     var fileLoader = this;
     this.$fileInput.on('change', function () {
+        fileLoader.$label.html(fileLoader.$fileInput.val());
         fileLoader.processFiles(this.files);
     });
 };
