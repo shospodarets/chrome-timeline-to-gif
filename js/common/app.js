@@ -6,6 +6,7 @@ var jQuery = require('../../bower_components/jquery/dist/jquery.min');
 window.jQuery = window.$ = jQuery;
 
 // invoke JS
+require('../../bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js');
 require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
 require('../../bower_components/notifyjs/dist/notify-combined');
 

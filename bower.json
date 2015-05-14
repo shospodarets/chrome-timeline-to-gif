@@ -20,6 +20,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.4",
-    "notifyjs": "~0.3.2"
+    "notifyjs": "~0.3.2",
+    "iframe-resizer": "~2.8.6"
   }
 }
