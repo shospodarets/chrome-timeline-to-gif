@@ -44,6 +44,7 @@ TimelineToImages.prototype.processJSON = function (data) {
     var jsonData = data.jsonData;
     var fileName = data.fileName;
     if (!Array.isArray(jsonData)) {
+        this.options.progressIndicator.hide();
         msg = 'JSON data is expected to be an Array (is it not Chrome Timeline data?)';
         console.error(msg);
         $.notify(
@@ -58,6 +59,7 @@ TimelineToImages.prototype.processJSON = function (data) {
         }
     });
     if (!capturedFrames.length) {
+        this.options.progressIndicator.hide();
         msg = 'There is no captured frames data in provided file';
         console.log(msg);
         $.notify(
@@ -98,13 +100,14 @@ TimelineToImages.prototype.initCanvas = function (capturedFrames, fileName) {
             this.initCanvasAndEncoder(imgParams);
             this.dataToGif(capturedFrames, fileName);
         }.bind(this), function (params) {
+            this.options.progressIndicator.hide();
             var msg = 'An error occurred when tried to load screenshot data as image';
             console.error(msg, params.screenshotData, params.err);
             $.notify(
                 msg,
                 "error"
             );
-        });
+        }.bind(this));
 };
 
 TimelineToImages.prototype.screenshotAsImages = function (capturedFrames) {
@@ -142,7 +145,7 @@ TimelineToImages.prototype.dataToGif = function (capturedFrames, fileName) {
         this.screenshotAsImages(capturedFrames)
     )
         .then(function (loadedImages) {
-            this.options.progressIndicator.hide();
+            //this.options.progressIndicator.hide();// prevent hiding between steps
             this.trigger('converted-to-images', {
                 capturedFrames: capturedFrames,
                 loadedImages: loadedImages,

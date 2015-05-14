@@ -2,5 +2,6 @@
   .progress-bar {
     min-width: 3em; // http://getbootstrap.com/components/#progress-animated
     min-height: 20px; // to prevent collapsing when element is empty
+    transition-duration: .1s; // reset of Bootstrap styles
   }
 }

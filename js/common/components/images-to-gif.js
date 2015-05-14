@@ -8,18 +8,8 @@ var ImagesToGif = function (options) {
 
     this.encoder = undefined;
     this.canvasData = undefined;
-    this.worker = new Worker("js/web-workers/worker.js");
 
     this.bindEvents();
-
-    // ToDo Worker and progress indicator
-    this.worker.onmessage = function (e) {
-        console.log('Message received from worker', e);
-        //myWorker.terminate();
-    };
-
-    this.worker.postMessage('test message');
-    console.log('Message posted to worker');
 };
 
 UTILS.inherit(ImagesToGif, EventsSystem);
@@ -34,7 +24,7 @@ ImagesToGif.prototype.initEncoder = function (loopsNumber) {
     this.encoder.start();
 };
 
-ImagesToGif.prototype.canvasToImg = function () {
+ImagesToGif.prototype.encoderDataToImg = function () {
     this.encoder.finish();
     var binary_gif = this.encoder.stream().getData(); //notice this is different from the as3gif package!
     return 'data:image/gif;base64,' + btoa(binary_gif);
@@ -51,32 +41,69 @@ ImagesToGif.prototype.screenshotToCanvas = function (params) {
 };
 
 ImagesToGif.prototype.imagesToGif = function (data) {
-    var capturedFrames = data.capturedFrames;
-    var loadedImages = data.loadedImages;
-    var fileName = data.fileName;
     this.canvasData = data.canvasData;
+    var fileName = data.fileName;
 
     this.initEncoder();
-    loadedImages.forEach(function (loadedImage, i) {
-        if (i === loadedImages.length) {
-            return;// skip the last
-        }
-        var currentFrame = capturedFrames[i];
-        var nextFrame = capturedFrames[i + 1];
-        if (loadedImage.img) {
-            this.screenshotToCanvas(loadedImage);
-            var currentFrameTime = currentFrame.ts;// in microseconds
-            var nextFrameTime = nextFrame.ts;// in microseconds
-            this.canvasToGif(currentFrame, (nextFrameTime - currentFrameTime) / 1000);
-        } else {
-            // empty frames in timeline data?
-        }
-    }.bind(this));
-    var data_url = this.canvasToImg();
-    var img = new Image();
-    document.body.appendChild(img);
-    img.src = data_url;
-    this.downloadCanvasAsImage(data_url, fileName);
+    this.processImages(data)
+        .then(function () {
+            var data_url = this.encoderDataToImg();
+            var img = new Image();
+            document.body.appendChild(img);
+            img.src = data_url;
+            this.downloadCanvasAsImage(data_url, fileName);
+        }.bind(this), function (err) {
+            var msg = 'An error occured when tried to process images from timeline data';
+            console.error(msg, err);
+            $.notify(
+                msg,
+                "error"
+            );
+        });
+};
+
+ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
+    var capturedFrames = data.capturedFrames;
+    var loadedImages = data.loadedImages;
+
+    var progress = i / loadedImages.length * 100;
+    this.options.progressIndicator.setProgress(progress);
+
+    var loadedImage = loadedImages[i];
+    if (i === loadedImages.length) {
+        resolve();
+        return;// skip the last
+    }
+    var currentFrame = capturedFrames[i];
+    var nextFrame = capturedFrames[i + 1];
+    if (loadedImage.img) {
+        this.screenshotToCanvas(loadedImage);
+        var currentFrameTime = currentFrame.ts;// in microseconds
+        var nextFrameTime = nextFrame.ts;// in microseconds
+        this.canvasToGif(currentFrame, (nextFrameTime - currentFrameTime) / 1000);
+    } else {
+        // empty frames in timeline data?
+    }
+    // next iteration
+    setTimeout(function () {
+        this.processImage(data, (i + 1), resolve, reject);
+    }.bind(this), 20);
+};
+
+/**
+ * Process images with timeout to prevent blocking UI
+ * @returns {Promise}
+ */
+ImagesToGif.prototype.processImages = function (data) {
+    this.options.progressIndicator.show('Encoding images to the result GIF');
+    return new Promise(function (resolve, reject) {
+            this.processImage(data, 0, resolve, reject);
+        }.bind(this)
+    ).then(function () {
+            this.options.progressIndicator.hide();
+        }.bind(this), function () {
+            this.options.progressIndicator.hide();
+        }.bind(this));
 };
 
 ImagesToGif.prototype.downloadCanvasAsImage = function (data_url, fileName) {

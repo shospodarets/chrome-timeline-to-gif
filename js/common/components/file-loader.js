@@ -176,8 +176,8 @@ FileLoader.prototype.readJSON_progress = function (e) {
 FileLoader.prototype.readJSON_load = function (resolve, reject, e) {
     var data;
     try {
-        this.options.progressIndicator.hide();
         data = JSON.parse(e.target.result);
+        //this.options.progressIndicator.hide();// prevent hiding between steps
         resolve(data);
     } catch (err) {
         this.readJSON_error(reject, err);
