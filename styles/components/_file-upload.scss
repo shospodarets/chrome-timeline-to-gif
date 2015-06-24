@@ -7,6 +7,7 @@
   .file-input-button {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
   }
 
   input[type=file] {
@@ -19,6 +20,7 @@
     opacity: 0;
     background-color: transparent;
     color: transparent;
+    cursor: pointer;
   }
 
   .label-wrapper{
