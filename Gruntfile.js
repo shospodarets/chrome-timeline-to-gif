@@ -127,6 +127,7 @@ module.exports = function (grunt) {
         'clean',
         'generateJs',
         'generateCss',
-        'copy'
+        'copy',
+        'watch'
     ]);
 };

@@ -119,10 +119,11 @@ FileLoader.prototype.checkErrors = function (files) {
     }
 
     var file = files[0];
+    var maxFileSize = 500;// in Mb
     // file size
-    if (file.size > 25 * 1024 * 1024) {
+    if (file.size > maxFileSize * 1024 * 1024) {
         $.notify(
-            'Max file size is 25Mb',
+            'Max file size is ' + maxFileSize + 'Mb',
             "warn"
         );
         return;
