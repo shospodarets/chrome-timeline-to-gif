@@ -40,6 +40,9 @@ TimelineToImages.prototype.initCanvasAndEncoder = function (params) {
  * @param data.fileName {String}
  */
 TimelineToImages.prototype.processJSON = function (data) {
+
+    console.log(data);
+    
     var msg;
     var jsonData = data.jsonData;
     var fileName = data.fileName;
@@ -54,7 +57,7 @@ TimelineToImages.prototype.processJSON = function (data) {
         return;
     }
     var capturedFrames = jsonData.filter(function (el) {
-        if (el['name'] === 'CaptureFrame') {
+        if (el['name'] === 'Screenshot') {
             return el;
         }
     });
@@ -95,7 +98,7 @@ TimelineToImages.prototype.screenshotToImg = function (screenshotData) {
 };
 
 TimelineToImages.prototype.initCanvas = function (capturedFrames, fileName) {
-    this.screenshotToImg(capturedFrames[0].args.data)
+    this.screenshotToImg(capturedFrames[0].args.snapshot)
         .then(function (imgParams) {
             this.initCanvasAndEncoder(imgParams);
             this.dataToGif(capturedFrames, fileName);
@@ -116,7 +119,7 @@ TimelineToImages.prototype.screenshotAsImages = function (capturedFrames) {
     var todoScreenshots = allScreenshots;
 
     capturedFrames.forEach(function (capturedFrame) {
-        if (!capturedFrame.args.data) {
+        if (!capturedFrame.args.snapshot) {
             // empty frames in timeline data?
             todoScreenshots--;
             promises.push(
@@ -124,7 +127,7 @@ TimelineToImages.prototype.screenshotAsImages = function (capturedFrames) {
             )
         } else {
             promises.push(
-                this.screenshotToImg(capturedFrame.args.data)
+                this.screenshotToImg(capturedFrame.args.snapshot)
                     .then(function (data) {
                         todoScreenshots--;
                         var progress = (allScreenshots - todoScreenshots) / allScreenshots * 100;

@@ -77,7 +77,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     this.options.progressIndicator.setProgress(progress);
 
     var loadedImage = loadedImages[i];
-    if (i === loadedImages.length) {
+    if (i === loadedImages.length - 1) { // dunno why it needs since otherwise got empty frame?
         resolve();
         return;// skip the last
     }
@@ -85,6 +85,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     var nextFrame = capturedFrames[i + 1];
     if (loadedImage.img) {
         this.screenshotToCanvas(loadedImage);
+
         var currentFrameTime = currentFrame.ts;// in microseconds
         var nextFrameTime = nextFrame.ts;// in microseconds
         this.canvasToGif(currentFrame, (nextFrameTime - currentFrameTime) / 1000);
