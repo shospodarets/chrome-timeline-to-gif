@@ -40,9 +40,6 @@ TimelineToImages.prototype.initCanvasAndEncoder = function (params) {
  * @param data.fileName {String}
  */
 TimelineToImages.prototype.processJSON = function (data) {
-
-    console.log(data);
-    
     var msg;
     var jsonData = data.jsonData;
     var fileName = data.fileName;

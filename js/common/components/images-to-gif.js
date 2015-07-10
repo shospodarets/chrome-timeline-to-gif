@@ -77,7 +77,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     this.options.progressIndicator.setProgress(progress);
 
     var loadedImage = loadedImages[i];
-    if (i === loadedImages.length - 1) { // dunno why it needs since otherwise got empty frame?
+    if (i === loadedImages.length - 1) {
         resolve();
         return;// skip the last
     }
@@ -100,7 +100,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
 
 /**
  * Process images with timeout to prevent blocking UI
- * @returns {Promise}
+ * @returns {{Promise}}
  */
 ImagesToGif.prototype.processImages = function (data) {
     this.options.progressIndicator.show('Encoding images to the result GIF');
