@@ -44,9 +44,58 @@ ImagesToGif.prototype.canvasToGif = function (delay) {// in ms
     this.encoder.addFrame(this.canvasData.context);
 };
 
+/**
+ * Parse time to a suitable format
+ */
+ImagesToGif.prototype.parseFrameTime = function (time) {
+    time = time / 1e6;// to seconds
+
+    if (time === 0) return parseFloat(time);// if time is round
+
+    return time.toFixed(3);
+};
+
+/**
+ * @param time in microseconds
+ */
+ImagesToGif.prototype.addTimeToCanvas = function (time) {
+    var canvasData = this.canvasData;
+    var ctx = canvasData.context;
+    var indent = 5;
+    var x = canvasData.width - indent;
+    var y = canvasData.height - indent;
+    var text = this.parseFrameTime(time) + 's';
+    var fontSize = 20;// in pixels
+
+    ctx.font = fontSize + "px Arial, Sans-serif";
+    ctx.textAlign = "end";
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = indent;
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = '#ff2e6b';
+    ctx.fillText(text, x, y);
+};
+
+/**
+ * @param params {{Object}}
+ *
+ * params.loadedImage {{Object}}
+ * params.loadedImage.img {{Image}}
+ *
+ * params.currentFrame {{Object}}
+ * params.currentFrame.ts {{number}} time in microseconds
+ *
+ * params.firstFrame {{Object}}
+ * params.firstFrame.ts {{number}} time in microseconds
+ */
 ImagesToGif.prototype.screenshotToCanvas = function (params) {
     this.canvasData.context
-        .drawImage(params.img, 0, 0);
+        .drawImage(params.loadedImage.img, 0, 0);
+
+    // timing
+    if (this.options.$showTimeCheckbox[0].checked) {
+        this.addTimeToCanvas(params.currentFrame.ts - params.firstFrame.ts);
+    }
 };
 
 ImagesToGif.prototype.imagesToGif = function (data) {
@@ -84,7 +133,11 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     var currentFrame = capturedFrames[i];
     var nextFrame = capturedFrames[i + 1];
     if (loadedImage.img) {
-        this.screenshotToCanvas(loadedImage);
+        this.screenshotToCanvas({
+            loadedImage: loadedImage,
+            currentFrame: currentFrame,
+            firstFrame: capturedFrames[0]
+        });
 
         var currentFrameTime = currentFrame.ts;// in microseconds
         var nextFrameTime = nextFrame.ts;// in microseconds

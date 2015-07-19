@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Chrome Timeline to GIF</title>
-    <meta name="description" content="Convert Chrome Timeline data to animated GIF (video)">
+    <title>Chrome Timeline to a GIF</title>
+    <meta name="description" content="Convert a Chrome Timeline data to an animated GIF (video)">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
@@ -17,7 +17,7 @@
 <canvas style="display: none;" id="c"></canvas>
 <div class="container">
     <header class="navbar navbar-default">
-        <h3 class="text-center heading">Convert Chrome Timeline data to animated GIF (video)</h3>
+        <h3 class="text-center heading">Convert a Chrome Timeline data to an animated GIF (video)</h3>
     </header>
     <div class="jumbotron">
         <ol>
@@ -45,6 +45,10 @@
     <div class="jumbotron">
 
         <div class="file-loader">
+            <label>
+                <input type="checkbox" class="show-time" checked />
+                Show timing on the result video
+            </label>
             <div class="file-input-wrapper">
                 <div class="btn btn-primary file-input-button">
                     Choose File...
