@@ -26,7 +26,8 @@ var App = function () {
         progressIndicator: this.progressIndicator
     });
     this.imagesToGif = new ImagesToGif({
-        progressIndicator: this.progressIndicator
+        progressIndicator: this.progressIndicator,
+        $showTimeCheckbox: this.fileLoader.$showTimeCheckbox
     });
 
     this.bindEvents();

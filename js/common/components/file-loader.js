@@ -18,6 +18,7 @@ FileLoader.prototype.createDom = function () {
     this.$container = $('.file-loader');
     this.$fileInput = this.$container.find('input[type=file]');
     this.$label = this.$container.find('.label');
+    this.$showTimeCheckbox = this.$container.find('.show-time');
 
     this.$container.append(this.$container);
 };
