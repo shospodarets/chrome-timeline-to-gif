@@ -40,7 +40,7 @@ ImagesToGif.prototype.encoderDataToImg = function () {
 };
 
 ImagesToGif.prototype.canvasToGif = function (delay) {// in ms
-    this.encoder.setDelay(delay); //go to next frame every n milliseconds
+    this.encoder.setDelay(delay); //go to a next frame after n milliseconds
     this.encoder.addFrame(this.canvasData.context);
 };
 
