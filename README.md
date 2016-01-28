@@ -9,5 +9,5 @@ $ npm install
 
 $ bower install
 
-$ grunt
+$ npm run grunt
 ```
