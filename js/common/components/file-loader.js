@@ -136,14 +136,6 @@ FileLoader.prototype.checkErrors = function (files) {
         );
         return;
     }
-    // file type
-    if (file.type !== 'application/json') {
-        $.notify(
-            'File is expected to have a JSON media type',
-            "warn"
-        );
-        return;
-    }
 
     return true;// success
 };
