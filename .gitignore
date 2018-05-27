@@ -1,5 +1,9 @@
 # dependencies
 node_modules
 
-# generated
+# IDE
+/.idea
+/*.iml
+
+# generated TODO UNCOMMENT/MOVE TO MASTER
 /dist

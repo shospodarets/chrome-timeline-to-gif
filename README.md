@@ -1,13 +1,15 @@
 #chrome-timeline-to-gif
 
-[Convert Chrome Timeline data to animated GIF (video)](http://blog.gospodarets.com/demos/chrome-timeline-to-gif/)
+[Convert Chrome DevTools Screenshots to animated GIF (video)](https://hospodarets.com/chrome-timeline-to-gif)
 
-### Run the build, tests and watch
+### Run the build
 
 ```bash
-$ npm install
+$ npm run build
+```
 
-$ bower install
+### Run the watch
 
-$ npm run grunt
+```bash
+$ npm run watch
 ```

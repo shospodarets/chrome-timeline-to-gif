@@ -1,14 +1,14 @@
 {
   "name": "chrome-timeline-to-gif",
-  "version": "1.0.0",
-  "homepage": "http://blog.gospodarets.com/chrome-timeline-to-gif/dist/",
+  "version": "1.1.0",
+  "homepage": "https://hospodarets.com/chrome-timeline-to-gif",
   "authors": [
     {
-      "name": "Sergey Gospodarets",
-      "homepage": "http://blog.gospodarets.com/"
+      "name": "Serg Hospodarets",
+      "homepage": "https://hospodarets.com/"
     }
   ],
-  "description": "Convert Chrome Timeline data to animated GIF (video)",
+  "description": "Convert Chrome DevTools Screenshots to animated GIF (video)",
   "keywords": [
     "chrome",
     "timeline",

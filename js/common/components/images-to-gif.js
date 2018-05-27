@@ -32,11 +32,11 @@ ImagesToGif.prototype.initEncoder = function (loopsNumber) {
     this.encoder.start();
 };
 
-ImagesToGif.prototype.encoderDataToImg = function () {
+ImagesToGif.prototype.encoderDataToDataURI = function () {
     this.encoder.finish();
-    var binary_gif = this.encoder.stream().getData(); //notice this is different from the as3gif package!
+    var binary_data = this.encoder.stream().getData(); //notice this is different from the as3gif package!
     delete this.encoder;// asking garbage collector to free allocated memory
-    return 'data:image/gif;base64,' + btoa(binary_gif);
+    return 'data:image/gif;base64,' + btoa(binary_data);
 };
 
 ImagesToGif.prototype.canvasToGif = function (delay) {// in ms
@@ -105,9 +105,10 @@ ImagesToGif.prototype.imagesToGif = function (data) {
     this.initEncoder();
     this.processImages(data)
         .then(function () {
-            var data_url = this.encoderDataToImg();
-            this.showResultImage(data_url);
-            this.downloadCanvasAsImage(data_url, fileName);
+            var dataURI = this.encoderDataToDataURI();
+
+            this.showResultImage(dataURI);
+            this.downloadCanvasAsImage(dataURIToBlobUrl(dataURI), fileName);
         }.bind(this), function (err) {
             var msg = 'An error occured when tried to process images from timeline data';
             console.error(msg, err);
@@ -161,30 +162,50 @@ ImagesToGif.prototype.processImages = function (data) {
             this.processImage(data, 0, resolve, reject);
         }.bind(this)
     ).then(function () {
-            this.options.progressIndicator.hide();
-        }.bind(this), function () {
-            this.options.progressIndicator.hide();
-        }.bind(this));
+        this.options.progressIndicator.hide();
+    }.bind(this), function () {
+        this.options.progressIndicator.hide();
+    }.bind(this));
 };
 
 // RESULT FUNCTIONS
-ImagesToGif.prototype.showResultImage = function (data_url) {
+ImagesToGif.prototype.showResultImage = function (dataURI) {
     var img = new Image();
     this.$imageWrapper.empty();
     this.$imageWrapper.append(img);
-    img.src = data_url;
+    img.src = dataURI;
     this.$container.show();
 };
 
-ImagesToGif.prototype.downloadCanvasAsImage = function (data_url, fileName) {
-    this.$imageDownloadLink.attr('href', data_url);
+ImagesToGif.prototype.downloadCanvasAsImage = function (dataURI, fileName) {
+    this.$imageDownloadLink.attr('href', dataURI);
     this.$imageDownloadLink.attr('download', fileName + '.gif');
-    //this.$imageDownloadLink.trigger('click);
 };
 
 // EVENTS
 ImagesToGif.prototype.bindEvents = function () {
     this.on('imagesToGif', this.imagesToGif.bind(this));
 };
+
+// http://eugeneware.com/software-development/converting-base64-datauri-strings-into-blobs-or-typed-array
+function convertDataURIToBinary(dataURI) {
+    var BASE64_MARKER = ';base64,';
+    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    var base64 = dataURI.substring(base64Index);
+    var raw = window.atob(base64);
+    var rawLength = raw.length;
+    var array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; i++) {
+        array[i] = raw.charCodeAt(i);
+    }
+    return array;
+}
+
+function dataURIToBlobUrl(dataURI){
+    var arr = convertDataURIToBinary(dataURI);
+    var blob = new Blob([arr], {type: 'image/gif'});
+    return window.URL.createObjectURL(blob);
+}
 
 exports.ImagesToGif = ImagesToGif;

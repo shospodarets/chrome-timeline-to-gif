@@ -101,7 +101,7 @@ module.exports = function (grunt) {
             options: {
                 banner: '' +
                 '//! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-                '//! author : Sergey Gospodarets\n' +
+                '//! author : Serg Hospodarets\n' +
                 '//! license : MIT\n' +
                 '//! https://github.com/malyw/chrome-timeline-to-gif\n'
             },
@@ -127,7 +127,6 @@ module.exports = function (grunt) {
         'clean',
         'generateJs',
         'generateCss',
-        'copy',
-        'watch'
+        'copy'
     ]);
 };
