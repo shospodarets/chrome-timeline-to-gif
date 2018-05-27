@@ -1,4 +1,4 @@
-#chrome-timeline-to-gif
+# chrome-timeline-to-gif
 
 [Convert Chrome DevTools Screenshots to animated GIF (video)](https://hospodarets.com/chrome-timeline-to-gif)
 
