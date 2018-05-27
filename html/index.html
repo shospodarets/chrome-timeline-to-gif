@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Chrome Timeline to a GIF</title>
-    <meta name="description" content="Convert a Chrome Timeline data to an animated GIF (video)">
+    <title>Chrome Screenshots to animated GIF</title>
+    <meta name="description" content="Convert Chrome DevTools Screenshots to animated GIF (video)">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
@@ -17,30 +17,33 @@
 <canvas style="display: none;" id="c"></canvas>
 <div class="container">
     <header class="navbar navbar-default">
-        <h3 class="text-center heading">Convert a Chrome Timeline data to an animated GIF (video)</h3>
+        <h3 class="text-center heading">Convert Chrome DevTools Screenshots to animated GIF (video)</h3>
     </header>
     <div class="jumbotron">
         <ol>
             <li>
-                Open the "Timeline" Tab in Dev Tools ( Chrome browser )
+                Open Chrome DevTools
             </li>
             <li>
-                Activate "Screenshots" checkbox
+                Open the "Performance" Tab
+            </li>
+            <li>
+                Activate the "Screenshots" checkbox
             </li>
             <li>
                 Click "Record"
             </li>
             <li>
-                Do stuff in your page you want to see in result video
+                Do stuff on the you want to see in the result video
             </li>
             <li>
                 Stop recording
             </li>
             <li>
-                Right click anywhere on the timeline data-> "Save Timeline Data..."
+                Right click anywhere on the recorded timeline-> "Save Profile..."
             </li>
             <li>
-                Upload a created file via "Choose File..." button or just drag-n-drop it in the browser window
+                Upload a saved file via "Choose File..." button or just drag-n-drop it into the browser window
             </li>
         </ol>
     </div>
@@ -49,7 +52,7 @@
 
         <div class="file-loader">
             <label>
-                <input type="checkbox" class="show-time" checked />
+                <input type="checkbox" class="show-time" checked/>
                 Show timing on the result video
             </label>
             <div class="file-input-wrapper">
@@ -57,12 +60,12 @@
                     Choose File...
                     <input type="file"
                            size="40"
-                            >
+                    >
                 </div>
                 <span class="label-wrapper">
                     <span class="label label-info"></span>
                 </span>
-                <h4>or just drag-n-drop file to the browser window</h4>
+                <h4>or just drag-n-drop file into the browser window</h4>
             </div>
         </div>
     </div>
@@ -75,6 +78,10 @@
         <div class="image-wrapper"></div>
     </div>
 </div>
+
+<a href="https://github.com/malyw/chrome-timeline-to-gif-demo">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
 <!-- LIBRARIES -->
 <script type="text/javascript" src="js/libraries/jsgif/LZWEncoder.js"></script>

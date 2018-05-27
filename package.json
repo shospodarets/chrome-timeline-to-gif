@@ -1,6 +1,7 @@
 {
   "title": "chrome-timeline-to-gif",
   "name": "chrome-timeline-to-gif",
+  "privte": true,
   "version": "1.1.0",
   "description": "Convert Chrome DevTools Screenshots to animated GIF (video)",
   "repository": {
