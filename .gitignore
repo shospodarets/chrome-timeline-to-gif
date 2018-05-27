@@ -4,6 +4,3 @@ node_modules
 # IDE
 /.idea
 /*.iml
-
-# generated TODO UNCOMMENT/MOVE TO MASTER
-/dist

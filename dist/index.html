@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chrome Screenshots to animated GIF</title>
+    <meta name="description" content="Convert Chrome DevTools Screenshots to animated GIF (video)">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/all.css">
+</head>
+<body>
+
+<canvas style="display: none;" id="c"></canvas>
+<div class="container">
+    <header class="navbar navbar-default">
+        <h3 class="text-center heading">Convert Chrome DevTools Screenshots to animated GIF (video)</h3>
+    </header>
+    <div class="jumbotron">
+        <ol>
+            <li>
+                Open Chrome DevTools
+            </li>
+            <li>
+                Open the "Performance" Tab
+            </li>
+            <li>
+                Activate the "Screenshots" checkbox
+            </li>
+            <li>
+                Click "Record"
+            </li>
+            <li>
+                Do stuff on the you want to see in the result video
+            </li>
+            <li>
+                Stop recording
+            </li>
+            <li>
+                Right click anywhere on the recorded timeline-> "Save Profile..."
+            </li>
+            <li>
+                Upload a saved file via "Choose File..." button or just drag-n-drop it into the browser window
+            </li>
+        </ol>
+    </div>
+
+    <div class="jumbotron">
+
+        <div class="file-loader">
+            <label>
+                <input type="checkbox" class="show-time" checked/>
+                Show timing on the result video
+            </label>
+            <div class="file-input-wrapper">
+                <div class="btn btn-primary file-input-button">
+                    Choose File...
+                    <input type="file"
+                           size="40"
+                    >
+                </div>
+                <span class="label-wrapper">
+                    <span class="label label-info"></span>
+                </span>
+                <h4>or just drag-n-drop file into the browser window</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron result text-center" style="display: none;">
+        <a class="btn btn-primary btn-download" href="#">
+            Click to download the result GIF
+        </a>
+
+        <div class="image-wrapper"></div>
+    </div>
+</div>
+
+<a href="https://github.com/malyw/chrome-timeline-to-gif-demo">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+<!-- LIBRARIES -->
+<script type="text/javascript" src="js/libraries/jsgif/LZWEncoder.js"></script>
+<script type="text/javascript" src="js/libraries/jsgif/NeuQuant.js"></script>
+<script type="text/javascript" src="js/libraries/jsgif/GIFEncoder.js"></script>
+
+<!-- MAIN -->
+<script src="js/common/main.js"></script>
+</body>
+</html>

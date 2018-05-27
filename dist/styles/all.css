@@ -1,0 +1,65 @@
+/**
+  Mixin to apply pre-defined breakpoints
+  $smaller {String} media breakpoint name from predefined map
+  $bigger {String} media breakpoint name from predefined map
+
+  USAGE EXAMPLES (with variations):
+
+  @include media($smaller: 'phoneLandscape') {
+  @include media('', 'phoneLandscape') {
+    // styles to be applied for 'phoneLandscape' and smaller
+  }
+
+  @include media($bigger: 'tabletPortrait') {
+  @include media('tabletPortrait', '') {
+    // styles to be applied for 'tabletPortrait' and bigger
+  }
+  @include media('tabletPortrait', 'tabletLandscape') {
+  @include media($bigger: 'tabletPortrait', $smaller: 'tabletLandscape') {
+    // styles to be applied for tablets
+  }
+*/
+#progress-indicator-modal .progress-bar {
+  min-width: 3em;
+  min-height: 20px;
+  transition: all 0s ease 0s; }
+
+header .heading {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.dragover {
+  opacity: 0.5; }
+
+.file-input-wrapper .file-input-button {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer; }
+
+.file-input-wrapper input[type=file] {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  background-color: transparent;
+  color: transparent;
+  cursor: pointer; }
+
+@media only screen and (max-width: 639px) {
+  .file-input-wrapper .label-wrapper {
+    display: block; } }
+
+.file-input-wrapper .label {
+  white-space: normal; }
+  @media only screen and (min-width: 640px) {
+    .file-input-wrapper .label {
+      margin-left: 10px; } }
+
+.result .btn-download {
+  margin-bottom: 20px; }
+
+.result img {
+  max-width: 100%; }
